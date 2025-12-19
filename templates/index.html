@@ -41,19 +41,31 @@
     <form action="/agregar" method="POST">
         <input type="text" name="cliente" placeholder="Nombre del cliente" required>
         <input type="number" name="cantidad" placeholder="Cantidad de flanes" min="1" required>
+        
+        <!-- Nuevo: Selector de Turno -->
+        <select name="turno" required style="padding: 10px; width: 100%; margin: 5px 0;">
+            <option value="Mañana">Turno Mañana</option>
+            <option value="Noche">Turno Noche</option>
+        </select>
+
         <button type="submit">Registrar venta</button>
     </form>
+
 
     <div class="ventas-list">
         <h2>Ventas de hoy</h2>
         <p>Total vendido: <strong>{{ total }}</strong> flanes</p>
         <ul>
             {% for venta in ventas %}
-                <li>{{ venta }}</li>
+                <li>
+                    <strong>{{ venta.fecha }} - {{ venta.turno }}</strong><br>
+                    {{ venta.cliente }}: {{ venta.cantidad }} flan(es)
+                </li>
             {% else %}
                 <li>No hay ventas registradas todavía.</li>
             {% endfor %}
         </ul>
+
     </div>
 </body>
 </html>

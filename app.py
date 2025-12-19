@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 import os
+from datetime import datetime # <--- Importante: agregá esto arriba
 
 app = Flask(__name__)
 
@@ -18,41 +19,47 @@ ARCHIVO_VENTAS = os.path.join(RUTA_BASE, 'ventas.txt')
 
 
 
-# Función para cargar las ventas desde el archivo
 def cargar_ventas():
     ventas = []
     if os.path.exists(ARCHIVO_VENTAS):
         with open(ARCHIVO_VENTAS, 'r', encoding='utf-8') as archivo:
             for linea in archivo:
-                if linea.strip():  # Si la línea no está vacía
+                if linea.strip():
                     partes = linea.strip().split('|')
-                    if len(partes) == 2:
-                        cliente = partes[0]
-                        cantidad = int(partes[1])
-                        ventas.append({'cliente': cliente, 'cantidad': cantidad})
-    return ventas
+                    # Ahora esperamos 4 partes: Fecha|Turno|Cliente|Cantidad
+                    if len(partes) == 4:
+                        ventas.append({
+                            'fecha': partes[0],
+                            'turno': partes[1],
+                            'cliente': partes[2],
+                            'cantidad': int(partes[3])
+                        })
+    # Opcional: Invertir la lista para ver lo último primero
+    return ventas[::-1] 
 
-# Función para guardar una venta en el archivo
-def guardar_venta(cliente, cantidad):
+def guardar_venta(cliente, cantidad, turno):
+    # Obtenemos la fecha de hoy (ej: 19/12/2025)
+    fecha_hoy = datetime.now().strftime("%d/%m/%Y")
+    
     with open(ARCHIVO_VENTAS, 'a', encoding='utf-8') as archivo:
-        archivo.write(f"{cliente}|{cantidad}\n")
+        # Guardamos: Fecha|Turno|Cliente|Cantidad
+        archivo.write(f"{fecha_hoy}|{turno}|{cliente}|{cantidad}\n")
 
 @app.route('/')
 def inicio():
     ventas = cargar_ventas()
     total = sum([v['cantidad'] for v in ventas])
-    ventas_texto = [f"{v['cliente']} - {v['cantidad']} flan(es)" for v in ventas]
-    return render_template('index.html', ventas=ventas_texto, total=total)
+    # Ya no armamos el texto acá, pasamos la lista de objetos completa al HTML
+    return render_template('index.html', ventas=ventas, total=total)
 
 @app.route('/agregar', methods=['POST'])
 def agregar_venta():
     cliente = request.form['cliente']
     cantidad = int(request.form['cantidad'])
+    turno = request.form['turno'] # <--- Recibimos el turno
     
-    # Guardamos la venta en el archivo
-    guardar_venta(cliente, cantidad)
+    guardar_venta(cliente, cantidad, turno)
     
-    # Redirigimos a la página principal
     return redirect(url_for('inicio'))
 
 if __name__ == '__main__':
