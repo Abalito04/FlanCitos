@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, send_file
 import os
 from datetime import datetime # <--- Importante: agregá esto arriba
 
@@ -67,6 +67,12 @@ def agregar_venta():
     guardar_venta(cliente, cantidad, turno)
     
     return redirect(url_for('inicio'))
+
+@app.route('/descargar')
+def descargar_historial():
+    # send_file hace todo el trabajo sucio: busca el archivo y te lo manda al navegador
+    # as_attachment=True fuerza la descarga en vez de mostrarlo en pantalla
+    return send_file(ARCHIVO_VENTAS, as_attachment=True, download_name="historial_ventas.txt")
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
