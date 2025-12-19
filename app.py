@@ -3,8 +3,20 @@ import os
 
 app = Flask(__name__)
 
+# Si estamos en Railway (o Linux), usamos una ruta absoluta. 
+# Si estamos en Windows (tu PC), usamos el archivo local.
+if os.name == 'nt':  # Windows
+    RUTA_BASE = os.getcwd()
+else:                # Linux (Railway)
+    RUTA_BASE = '/app/data' 
+
+if not os.path.exists(RUTA_BASE) and os.name != 'nt':
+    os.makedirs(RUTA_BASE)
+
 # Nombre del archivo donde guardamos las ventas
-ARCHIVO_VENTAS = 'ventas.txt'
+ARCHIVO_VENTAS = os.path.join(RUTA_BASE, 'ventas.txt')
+
+
 
 # Función para cargar las ventas desde el archivo
 def cargar_ventas():
