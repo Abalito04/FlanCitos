@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlanCitos 🍮</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f9f3e8;
+        }
+        h1 { color: #8b4513; }
+        input, button {
+            padding: 10px;
+            margin: 5px 0;
+            width: 100%;
+            font-size: 16px;
+        }
+        button {
+            background-color: #ff8c42;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover { background-color: #e67a2e; }
+        .ventas-list {
+            margin-top: 30px;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🍮 FlanCitos - Control de Ventas</h1>
+    
+    <h2>Registrar venta</h2>
+    <form action="/agregar" method="POST">
+        <input type="text" name="cliente" placeholder="Nombre del cliente" required>
+        <input type="number" name="cantidad" placeholder="Cantidad de flanes" min="1" required>
+        <button type="submit">Registrar venta</button>
+    </form>
+
+    <div class="ventas-list">
+        <h2>Ventas de hoy</h2>
+        <p>Total vendido: <strong>{{ total }}</strong> flanes</p>
+        <ul>
+            {% for venta in ventas %}
+                <li>{{ venta }}</li>
+            {% else %}
+                <li>No hay ventas registradas todavía.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
