@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, send_file
 import os
-from datetime import datetime # <--- Importante: agregá esto arriba
+from datetime import datetime 
 
 app = Flask(__name__)
 
@@ -35,7 +35,6 @@ def cargar_ventas():
                             'cliente': partes[2],
                             'cantidad': int(partes[3])
                         })
-    # OJO: Sacá el [::-1] (reverso) si lo tenías, porque nos complica borrar por ahora.
     return ventas # Devolvemos en orden de carga
 
 
