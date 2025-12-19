@@ -13,11 +13,14 @@
             background-color: #f9f3e8;
         }
         h1 { color: #8b4513; }
-        input, button {
+        input, select, button { /* Agregué select también para que quede parejo */
             padding: 10px;
             margin: 5px 0;
             width: 100%;
             font-size: 16px;
+            box-sizing: border-box; /* <--- ESTA ES LA MAGIA */
+            border: 1px solid #ccc; /* Un borde suavecito para definir el límite */
+            border-radius: 4px; /* Bordes redondeados modernos */
         }
         button {
             background-color: #ff8c42;
