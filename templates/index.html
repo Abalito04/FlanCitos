@@ -58,19 +58,27 @@
     <div class="ventas-list">
         <h2>Ventas de hoy</h2>
         <p>Total vendido: <strong>{{ total }}</strong> flanes</p>
-        <ul>
+        <ul style="list-style: none; padding: 0;"> <!-- Saqué los bullets para que quede más lindo -->
             {% for venta in ventas %}
-                <li>
-                    <strong>{{ venta.fecha }} - {{ venta.turno }}</strong><br>
-                    {{ venta.cliente }}: {{ venta.cantidad }} flan(es)
+                <li style="background: #fff; border-bottom: 1px solid #eee; padding: 10px; display: flex; justify-content: space-between; align-items: center;">
+                    
+                    <!-- Datos de la venta -->
+                    <div>
+                        <strong>{{ venta.fecha }} - {{ venta.turno }}</strong><br>
+                        {{ venta.cliente }}: {{ venta.cantidad }} flan(es)
+                    </div>
+
+                    <!-- Botón de Borrar (Link rojo) -->
+                    <a href="/eliminar/{{ venta.id_real }}" onclick="return confirm('¿Seguro querés borrar esta venta?');" style="color: red; text-decoration: none; font-size: 20px; font-weight: bold;">
+                        🗑️
+                    </a>
+
                 </li>
             {% else %}
-                <li>No hay ventas registradas todavía.</li>
+                <li style="padding: 10px;">No hay ventas registradas hoy.</li>
             {% endfor %}
         </ul>
-    <div class="ventas-list">
-        <!-- ... (acá estaba tu lista de ventas) ... -->
-        </ul>
+
         
         <!-- Botón de descarga -->
         <div style="margin-top: 20px; text-align: center;">

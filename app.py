@@ -23,19 +23,21 @@ def cargar_ventas():
     ventas = []
     if os.path.exists(ARCHIVO_VENTAS):
         with open(ARCHIVO_VENTAS, 'r', encoding='utf-8') as archivo:
-            for linea in archivo:
+            # enumerate nos da el número de línea (i) automáticamente
+            for i, linea in enumerate(archivo):
                 if linea.strip():
                     partes = linea.strip().split('|')
-                    # Ahora esperamos 4 partes: Fecha|Turno|Cliente|Cantidad
                     if len(partes) == 4:
                         ventas.append({
+                            'id_real': i,  # <--- GUARDAMOS LA POSICIÓN REAL
                             'fecha': partes[0],
                             'turno': partes[1],
                             'cliente': partes[2],
                             'cantidad': int(partes[3])
                         })
-    # Opcional: Invertir la lista para ver lo último primero
-    return ventas[::-1] 
+    # OJO: Sacá el [::-1] (reverso) si lo tenías, porque nos complica borrar por ahora.
+    return ventas # Devolvemos en orden de carga
+
 
 def guardar_venta(cliente, cantidad, turno):
     # Obtenemos la fecha de hoy (ej: 19/12/2025)
@@ -73,6 +75,25 @@ def descargar_historial():
     # send_file hace todo el trabajo sucio: busca el archivo y te lo manda al navegador
     # as_attachment=True fuerza la descarga en vez de mostrarlo en pantalla
     return send_file(ARCHIVO_VENTAS, as_attachment=True, download_name="historial_ventas.txt")
+
+@app.route('/eliminar/<int:indice>')
+def eliminar_venta(indice):
+    # 1. Cargamos todas las ventas (pero necesitamos las líneas crudas para reescribir)
+    if os.path.exists(ARCHIVO_VENTAS):
+        with open(ARCHIVO_VENTAS, 'r', encoding='utf-8') as archivo:
+            lineas = archivo.readlines()
+        
+        # 2. Verificamos que el índice sea válido (que exista esa línea)
+        if 0 <= indice < len(lineas):
+            # 3. La borramos de la lista en memoria
+            del lineas[indice]
+            
+            # 4. Sobrescribimos el archivo con la lista nueva (sin la borrada)
+            with open(ARCHIVO_VENTAS, 'w', encoding='utf-8') as archivo:
+                archivo.writelines(lineas)
+    
+    return redirect(url_for('inicio'))
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
