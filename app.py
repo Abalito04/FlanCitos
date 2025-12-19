@@ -47,10 +47,16 @@ def guardar_venta(cliente, cantidad, turno):
 
 @app.route('/')
 def inicio():
-    ventas = cargar_ventas()
-    total = sum([v['cantidad'] for v in ventas])
-    # Ya no armamos el texto acá, pasamos la lista de objetos completa al HTML
-    return render_template('index.html', ventas=ventas, total=total)
+    # 1. Cargamos TODO el historial
+    todas_las_ventas = cargar_ventas()    
+    # 2. Obtenemos la fecha de hoy
+    fecha_hoy = datetime.now().strftime("%d/%m/%Y")    
+    # 3. FILTRADO: Solo las de hoy
+    ventas_hoy = [v for v in todas_las_ventas if v['fecha'] == fecha_hoy]    
+    # 4. Total de hoy
+    total_hoy = sum([v['cantidad'] for v in ventas_hoy])
+    
+    return render_template('index.html', ventas=ventas_hoy, total=total_hoy)
 
 @app.route('/agregar', methods=['POST'])
 def agregar_venta():
