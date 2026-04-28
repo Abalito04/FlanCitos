@@ -1,72 +1,93 @@
-# 🍮 FlanCitos - Control de Ventas
+# 🍮 FlanCitos — Sales Management System
 
-**FlanCitos** es una aplicación web minimalista y responsive diseñada para gestionar las ventas diarias de un emprendimiento de postres caseros. Permite registrar pedidos, calcular totales del día y exportar el historial completo.
+[![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
+[![Flask](https://img.shields.io/badge/Flask-3.1-000000?style=flat-square&logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
+[![Railway](https://img.shields.io/badge/Deploy-Railway-0B0D0E?style=flat-square&logo=railway&logoColor=white)](https://railway.app/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
----
-
-## 🚀 Características
-
-- **Registro Rápido:** Formulario simple para cargar cliente, cantidad y turno (Mañana/Noche).
-- **Caja Diaria Automática:** Filtra y muestra solo las ventas de la fecha actual con su total acumulado.
-- **Historial Seguro:** Almacenamiento persistente en archivo de texto (`ventas.txt`).
-- **Gestión de Errores:** Posibilidad de eliminar ventas cargadas incorrectamente.
-- **Exportación:** Botón para descargar el historial completo de ventas.
-- **Diseño Responsive:** Interfaz optimizada para uso cómodo desde celulares.
+> **EN:** A web-based sales and management system built for a small local business (FlanCitos). Handles daily sales tracking, product management, and basic reporting through a clean Flask interface.
+>
+> **ES:** Sistema web de ventas y gestión desarrollado para un pequeño negocio local (FlanCitos). Permite registrar ventas diarias, administrar productos y generar reportes básicos desde una interfaz simple en Flask.
 
 ---
 
-## 🛠️ Tecnologías Usadas
+## ✨ Features · Características
 
-- **Python 3.x**
-- **Flask** (Framework web)
-- **HTML5 / CSS3** (Diseño y estructura)
-- **Gunicorn** (Servidor de producción)
+- 📊 **Daily sales tracking** — register and view sales by date
+- 🧣 **Product management** — add, edit and remove products with prices
+- 📅 **Sales history** — view past transactions and totals
+- 📈 **Basic reporting** — daily revenue summary
+- 🔐 **Simple admin interface** — protected management views
+- 📱 **Responsive UI** — works on mobile and desktop
 
 ---
 
-## 💻 Instalación y Uso Local
+## 🗂️ Project Structure
 
-1. **Clonar el repositorio:**
+```
+FlanCitos/
+├── app.py              # Flask application — routes and logic
+├── templates/          # HTML templates (Jinja2)
+├── requirements.txt    # Python dependencies
+├── Procfile            # Railway deployment config
+└── README.md
+```
 
-git clone https://github.com/Abalito04/FlanCitos
+---
+
+## 🚀 Quick Start · Instalación local
+
+### Prerequisites
+- Python 3.8+
+- pip
+
+### Installation
+
+```bash
+# 1. Clone the repo
+git clone https://github.com/Abalito04/FlanCitos.git
 cd FlanCitos
 
-2. **Crear un entorno virtual (recomendado):**
-
+# 2. Create and activate a virtual environment
 python -m venv venv
-source venv/bin/activate # En Linux/Mac
-venv\Scripts\activate # En Windows
+source venv/bin/activate  # Windows: venv\Scripts\activate
 
-3. **Instalar dependencias:**
-
+# 3. Install dependencies
 pip install -r requirements.txt
 
-4. **Ejecutar la aplicación:**
-
+# 4. Run the app
 python app.py
+```
 
-5. **Abrir en el navegador:**
-
-Ingresa a `http://localhost:5000`
-
----
-
-## ☁️ Despliegue en Railway
-
-Este proyecto está configurado para desplegarse fácilmente en **Railway**:
-
-1. Conectar el repositorio de GitHub a Railway.
-2. Configurar un **Volumen** persistente en la ruta `/app/data` para evitar perder datos al reiniciar.
-3. Railway detectará automáticamente el archivo `Procfile` y `requirements.txt`.
+App will be available at `http://localhost:5000`
 
 ---
 
-## 📝 Estructura del Archivo de Datos
+## 🔧 Tech Stack
 
-Las ventas se guardan en `ventas.txt` con el siguiente formato (pipe-separated):
-Ejemplo: `19/12/2025|Mañana|Juan|2` - DD/MM/AAAA|Turno|Cliente|Cantidad
+| Layer | Technology |
+|-------|------------|
+| Backend | Python · Flask 3.1 |
+| Templating | Jinja2 |
+| Frontend | HTML5 · CSS3 |
+| Server | Gunicorn |
+| Deployment | Railway |
 
 ---
 
-**Desarrollado por Matias Abalo para el control del imperio del flan.**
+## 💡 What I Learned · Qué aprendí
 
+This project was built to solve a **real problem for a real client** — a small local business that needed a simple digital tool to replace their paper-based sales tracking.
+
+- Structuring a **Flask app from scratch** with clean route organization
+- Working with **Jinja2 templates** for dynamic HTML rendering
+- **Deploying a Flask app on Railway** with Gunicorn and Procfile
+- Handling **real-world requirements** from a non-technical client
+
+---
+
+## 👨‍💻 Author
+
+**Matias Abalo** — [@Abalito04](https://github.com/Abalito04)
+
+🌐 [Portfolio](https://matiabalo.up.railway.app/) · ✉️ [abalito95@gmail.com](mailto:abalito95@gmail.com)
